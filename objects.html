@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objects</title>
+</head>
+
+<body>
+    <script>
+        function Student(name, address, phone, course) {
+            this.name = name;
+            this.address = address;
+            this.phone = phone;
+            this.course = course;
+        }
+
+        Student.prototype.getInfo = function () {
+            return "Name: " + this.name + "\n" +
+                "Address: " + this.address + "\n" +
+                "Phone: " + this.phone + "\n" +
+                "Course: " + this.course
+        };
+
+        let student1 = new Student("John Benson", "High Park 36", "507-833-3567", "Geography");
+        let student1Info = student1.getInfo()
+
+        console.log(student1Info);
+
+
+        function Second(name, address, phone, course) {
+            Student.call(this, name, address, phone, course);
+        }
+        Second.prototype = Object.create(Student.prototype);
+        Second.prototype.constructor = Second;
+
+        Second.prototype.getInfo = function () {
+            return Student.prototype.getInfo.call(this) + "\n"
+        }
+        let student2 = new Second("Mary James", "Sycamore 388", "682-439-4771", "History");
+        let student2Info = student2.getInfo()
+
+        console.log(student2Info);
+
+        function Third(name, address, phone, course) {
+            Student.call(this, name, address, phone, course);
+        }
+        Third.prototype = Object.create(Student.prototype);
+        Third.prototype.constructor = Third;
+
+        Third.prototype.getInfo = function () {
+            return Student.prototype.getInfo.call(this) + "\n"
+        }
+        let student3 = new Second("John Antonio", "Summit Street 232", "563-388-4447", "Design");
+        let student3Info = student2.getInfo()
+
+        console.log(student3Info);
+
+    </script>
+
+</body>
+
+</html>
